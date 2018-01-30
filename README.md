@@ -1,7 +1,7 @@
 # TeamSystemPROJECT
 Database first model creation.Working in a team.
 
-Creadentials for SQL database:
+<b>Creadentials for SQL database:</b>
 
 Server=2742d85f-a758-45d4-a454-a87800818d39.sqlserver.sequelizer.com;
 
