@@ -4,137 +4,132 @@ use TeamSystemDB
 go
 create table Teams
 (
-	ID int primary key identity,
+	ID int primary key clustered identity,
 	TeamName varchar(50) not null
 )
 go
-create table TeamMembers
+create table ModelRoles
 (
-	ID int primary key identity,
-	Team_ID int unique not null foreign key references Teams(ID)
+	ID int primary key clustered identity,
+	Role varchar(50) not null unique
 )
 go
 create table PersonModels
 (
-	ID int primary key identity,
+	ID int primary key clustered identity,
 	UCN char(10) unique not null,
+	LastName varchar(50) not null,
+	Team_ID int not null foreign key references Teams(ID),
+	ModelRole_ID int not null foreign key references ModelRoles(ID),
 	FirstName varchar(50) not null,
 	SurName varchar(50),
-	LastName varchar(50) not null,
 	BirthDate date not null
 )
 go
-create table Players
+create table TeamMembers
 (
-	ID int primary key identity,
-	PersonModel_ID int unique not null foreign key references PersonModels(ID) on delete cascade,
-	TeamMember_ID int foreign key references TeamMembers(ID)
+	ID int primary key clustered identity,
+	Team_ID int unique not null foreign key references Teams(ID),
+	AssistantCoach_ID int unique not null foreign key references PersonModels(ID),
+	Coach_ID int unique not null foreign key references PersonModels(ID),
+	Doctor int unique not null foreign key references PersonModels(ID),
+	Therapist_ID int unique not null foreign key references PersonModels(ID)
 )
 go
-create table Coaches
+create table StartingPlayers
 (
-	ID int primary key identity,
-	PersonModel_ID int unique not null foreign key references PersonModels(ID) on delete cascade,
-	TeamMember_ID int unique foreign key references TeamMembers(ID)
-)
-go
-create table AssistentCoaches
-(
-	ID int primary key identity,
-	PersonModel_ID int unique not null foreign key references PersonModels(ID) on delete cascade,
-	TeamMember_ID int unique foreign key references TeamMembers(ID)
-)
-go
-create table Doctors
-(
-	ID int primary key identity,
-	PersonModel_ID int unique not null foreign key references PersonModels(ID) on delete cascade,
-	TeamMember_ID int unique foreign key references TeamMembers(ID)
-)
-go
-create table Therapists
-(
-	ID int primary key identity,
-	PersonModel_ID int unique not null foreign key references PersonModels(ID) on delete cascade,
-	TeamMember_ID int unique foreign key references TeamMembers(ID)
+	PersonModel_ID int not null foreign key references PersonModels(ID),
+	TeamMember_ID int not null foreign key references TeamMembers(ID)
 )
 go
 create table Matches
 (
-	ID int primary key identity,
-	Result varchar(7),
+	ID int primary key clustered identity,
 	MatchDate smalldatetime,
 	HomeTeam_ID int foreign key references Teams(ID),
-	GuestTeam_ID int foreign key references Teams(ID)
+	GuestTeam_ID int foreign key references Teams(ID),
+	HomeTeamScore int,
+	GuestTeamScore int
 )
 go
+create table HistoryMatches
+(
+	ID int primary key clustered identity,
+	MatchDate smalldatetime,
+	HomeTeam varchar(50),
+	GuestTeam varchar(50),
+	HomeTeamScore int,
+	GuestTeamScore int
+)
+go
+create trigger MatchAdded on Matches
+ for insert
+as
+begin
+	declare @MatchDate smalldatetime
+	declare @HomeTeamName varchar(50)
+	declare @GuestTeamName varchar(50)
+	declare @HomeTeamScore int
+	declare @GuestTeamScore int
+
+	select top 1 @MatchDate = MatchDate, @HomeTeamScore = HomeTeamScore, @GuestTeamScore = GuestTeamScore
+	from Matches
+	order by MatchDate desc
+
+	select top 1 @HomeTeamName = t.TeamName
+	from Matches m , Teams t
+	where m.HomeTeam_ID = t.ID
+
+	select top 1 @GuestTeamName = t.TeamName
+	from Matches m , Teams t
+	where m.GuestTeam_ID = t.ID
+
+	insert into HistoryMatches
+	values
+	(
+		@MatchDate,
+		@HomeTeamName,
+		@GuestTeamName,
+		@HomeTeamScore,
+		@GuestTeamScore
+	)
+end
 
 --Filling data
 insert into Teams
-values('Barcelona')
+values('Manchester United')
 insert into Teams
 values('Real Madrid')
 insert into Teams
-values('Manchester United')
+values('Barcelona')
 go
-insert into TeamMembers
-values('2')
-insert into TeamMembers
-values('3')
+insert into ModelRoles
+values('AssitantCoach')
+insert into ModelRoles
+values('Coach')
+insert into ModelRoles
+values('Doctor')
+insert into ModelRoles
+values('Therapist')
+insert into ModelRoles
+values('Player')
 go
 insert into PersonModels
-values('9701314522','Simeon','Georgiev','Mechkov','1997-01-31')
+values('9701314522','Mechkov','2','5','Simeon','Georgiev','1997-01-31')
 insert into PersonModels
-values('9701314523','Valenti','Spasimirov','Parvanov','1993-02-23')
-insert into PersonModels
-values('9701314524','Ivan','Rosenov','Ivanov','1992-03-15')
-insert into PersonModels
-values('9701314525','Boris','Krasimirov','Tiutiukov','1996-05-18')
-insert into PersonModels
-values('9701314526','Tinko','Spasov','Boqdjiev','1998-04-27')
-insert into PersonModels
-values('9701314527','Nikolay','Tsvetanov','Tanchev','1991-06-22')
-insert into PersonModels
-values('9701314528','Georgi','Vaklinov','Vaklinov','1990-07-01')
-insert into PersonModels
-values('9701314529','Rosen','Detelinov','Dimitrov','1989-08-07')
-insert into PersonModels
-values('9701314530','Stoqn','Georgiev','Chepov','1988-09-13')
-insert into PersonModels
-values('9701314531','Filip','Petkov','Slavov','1987-10-09')
-insert into PersonModels
-values('9701314532','Kolio','Cukata','Petrovich','1969-06-11')
+values('9701304523','Purvanov','2','5','Valentin','Spasimirov','1997-01-30')
 go
-insert into AssistentCoaches
-values('1','1')
-insert into AssistentCoaches
-values('2','2')
-insert into Coaches
-values('3','1')
-insert into Coaches
-values('4','2')
-insert into Doctors
-values('5','1')
-insert into Doctors
-values('6','2')
-insert into Therapists
-values('7','1')
-insert into Therapists
-values('8','2')
-insert into Players
-values('9','1')
-insert into Players
-values('10','2')
-insert into Players
-values('11','1')
-go
+
 insert into Matches
-values('','2018-01-25','2','3')
+values('2018-01-25','1','2','5','7')
 insert into Matches
-values('','2018-01-31','3','2')
+values('2018-01-31','2','1','9','3')
 go
 
 --Test queries
-select pm.UCN,(pm.FirstName + ' ' + pm.SurName + ' ' + pm.LastName) as Full_Name,pm.BirthDate
-from Matches m,Teams t,TeamMembers tm,Players p,PersonModels pm
-where m.HomeTeam_ID = t.ID and tm.Team_ID = t.ID and p.TeamMember_ID = tm.ID and p.PersonModel_ID = pm.ID and m.MatchDate = '2018-01-25'
+select *
+from HistoryMatches
+
+--select pm.UCN,(pm.FirstName + ' ' + pm.SurName + ' ' + pm.LastName) as Full_Name,pm.BirthDate
+--from Matches m,Teams t,TeamMembers tm,Players p,PersonModels pm
+--where m.HomeTeam_ID = t.ID and tm.Team_ID = t.ID and p.TeamMember_ID = tm.ID and p.PersonModel_ID = pm.ID and m.MatchDate = '2018-01-25'
