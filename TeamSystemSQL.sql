@@ -27,19 +27,17 @@ create table PersonModels
 	IsReserve bit not null
 )
 go
-create table StartingMembersOfTeam
+create table StartingMembersOfATeam
 (
 	ID int primary key clustered identity,
-	AssistantCoach_ID int not null foreign key references PersonModels(ID),
-	Coach_ID int not null foreign key references PersonModels(ID),
-	Doctor int not null foreign key references PersonModels(ID),
-	Therapist_ID int not null foreign key references PersonModels(ID)
+	Team_ID int not null unique foreign key references Teams(ID)
 )
 go
 create table StartingPlayers
 (
-	Member_ID int not null foreign key references StartingMembersOfTeam(ID),
-	PersonModel_ID int not null foreign key references PersonModels(ID)
+	Member_ID int foreign key references StartingMembersOfATeam(ID),
+	Player_ID int foreign key references PersonModels(ID),
+	constraint PK_StartingPlayers primary key clustered (Member_ID,Player_ID)
 )
 go
 create table Matches
@@ -52,32 +50,54 @@ create table Matches
 	GuestTeamScore int
 )
 go
-create table PersonHistory
+create table PersonHistories
 (
 	ID int primary key clustered identity,
-	--PersonModel_ID int not null foreign key references PersonModels(ID),
-	UCN nchar(10),
-	LastName nvarchar(50),
+	PersonModel_ID int not null foreign key references PersonModels(ID),
 	PreviousTeam nvarchar(50),
-	Role nvarchar(50),
-	FirstName nvarchar(50),
-	MiddleName nvarchar(50),
-	BirthDate date,
 	IsReserve bit,
-	UpdatedOn datetime
+	UpdatedDate datetime
+)
+go
+create table MatchHistories
+(
+	ID int primary key clustered identity,
+	MatchDate smalldatetime,
+	HomeTeamPlayer nvarchar(150),
+	GuestTeamPlayer nvarchar(150),
+	UpdatedDate datetime
 )
 go
 create trigger PersonAudit on PersonModels
 after update
 as
 begin
-	insert into PersonHistory
-	--select d.ID, t.TeamName, d.IsReserve, GETDATE()
-	select d.UCN, d.LastName, t.TeamName, mr.Role, d.FirstName, d.MiddleName, d.BirthDate, d.IsReserve, GETDATE()
-	from deleted d,Teams t,ModelRoles mr
-	where d.Team_ID = t.ID and d.ModelRole_ID = mr.ID
+	insert into PersonHistories
+	select d.ID, t.TeamName, d.IsReserve, getdate()
+	from deleted d,Teams t
+	where d.Team_ID = t.ID
 end
 go
+create trigger MatchAudit on Matches
+after insert,update
+as
+begin
+	declare @GuestTeamPlayers table
+	(
+		Full_Name nvarchar(150)
+	);
+	insert into @GuestTeamPlayers
+	select (pm.FirstName + ' ' + pm.LastName + ' - ' + mr.Role)
+	from Matches i,Teams t,StartingMembersOfTeam sm,StartingPlayers sp,PersonModels pm,ModelRoles mr
+	where i.GuestTeam_ID = t.ID and sm.Team_ID = t.ID and sp.Member_ID = sm.ID and sp.Player_ID = pm.ID and pm.ModelRole_ID = mr.ID
+
+	insert into MatchHistories
+	select i.MatchDate, (pm.FirstName + ' ' + pm.LastName + ' - ' + mr.Role), gp.Full_Name, getdate()
+	from Matches i,Teams t,StartingMembersOfTeam sm,StartingPlayers sp,PersonModels pm,ModelRoles mr,@GuestTeamPlayers gp
+	where i.HomeTeam_ID = t.ID and sm.Team_ID = t.ID and sp.Member_ID = sm.ID and sp.Player_ID = pm.ID and pm.ModelRole_ID = mr.ID
+end
+go
+
 --Filling data
 insert into Teams
 values
@@ -147,11 +167,11 @@ values
 go
 insert into StartingMembersOfTeam
 values
-	('26','31','36','41'),
-	('27','32','37','42'),
-	('28','33','38','43'),
-	('29','34','39','44'),
-	('30','35','40','25')
+	('1'),
+	('2'),
+	('3'),
+	('4'),
+	('5')
 go
 insert into StartingPlayers
 values
@@ -160,33 +180,50 @@ values
 	('1','3'),
 	('1','4'),
 	('1','5'),
+	('1','5'),
+	('1','26'),
+	('1','31'),
+	('1','36'),
+	('1','41'),
 	('2','6'),
 	('2','7'),
 	('2','8'),
 	('2','9'),
 	('2','10'),
+	('2','27'),
+	('2','32'),
+	('2','37'),
+	('2','42'),
 	('3','11'),
 	('3','12'),
 	('3','13'),
 	('3','14'),
 	('3','15'),
+	('3','28'),
+	('3','33'),
+	('3','38'),
+	('3','43'),
 	('4','16'),
 	('4','17'),
 	('4','18'),
 	('4','19'),
 	('4','20'),
+	('4','29'),
+	('4','34'),
+	('4','39'),
+	('4','44'),
 	('5','21'),
 	('5','22'),
 	('5','23'),
-	('5','24')
+	('5','24'),
+	('5','30'),
+	('5','35'),
+	('5','40'),
+	('5','45')
 go
 insert into Matches
 values
 	('2018-01-25 12:30:20','1','2','5','7'),
 	('2018-03-29 16:20:10','2','1','','')
 go
-
 --Test queries
-update PersonModels
-set Team_ID = 5
-where ID = 17
