@@ -35,6 +35,7 @@ create table StartingMembersOfATeam
 go
 create table StartingPlayers
 (
+	ID int primary key clustered identity,
 	Member_ID int foreign key references StartingMembersOfATeam(ID),
 	Player_ID int foreign key references PersonModels(ID)
 )
@@ -248,4 +249,3 @@ go
 --	('2018-01-25 12:30:20','1','2','5','7'),
 --	('2018-03-29 16:20:10','3','4','','')
 --go
-----Test queries
