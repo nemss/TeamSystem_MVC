@@ -69,5 +69,41 @@
             TempData.AddSuccessMessage($"User {user.UserName} successfully added to the {model.Role} role.");
             return RedirectToAction(nameof(Index));
         }
+
+        //GET: /Admin/Users/DeleteUser/{id}
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            var findUser = await this.userManager.FindByIdAsync(userId);
+
+            if (findUser == null)
+            {
+                return NotFound();
+            }
+
+            return View(new UserDeleteForm
+            {
+                Id = findUser.Id,
+                Username = findUser.UserName,
+                Email = findUser.Email
+            });
+        }
+
+        //POST: /Admin/Users/DeleteUser/{id}
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var findUserById = await this.userManager.FindByIdAsync(id);
+
+            if (findUserById == null)
+            {
+                return NotFound();
+            }
+
+            await this.users.DeleteAsync(findUserById.Id);
+
+            TempData.AddSuccessMessage($"User {findUserById.UserName} successfully deleted ");
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
