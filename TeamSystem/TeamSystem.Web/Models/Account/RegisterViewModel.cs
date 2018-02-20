@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TeamSystem.Data.Models.AccountViewModels
+﻿namespace TeamSystem.Data.Models.AccountViewModels
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class RegisterViewModel
     {
+        [Required]
+        [StringLength(50)]
+        public string Username { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
