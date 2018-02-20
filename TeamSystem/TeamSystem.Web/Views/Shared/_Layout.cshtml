@@ -30,6 +30,16 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    @if (User.IsInRole(WebConstants.AdministratorRole))
+                    {
+                        <li><a asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></li>
+                    }
+
+                    @if (User.IsInRole(WebConstants.BlogAuthorRole))
+                    {
+                        <li><a asp-area="Blog" asp-controller="Articles" asp-action="Create">Publish Article</a></li>
+                    }
+
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>

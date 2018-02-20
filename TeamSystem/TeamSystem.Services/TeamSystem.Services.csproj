@@ -4,4 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TeamSystem.Common\TeamSystem.Common.csproj" />
+    <ProjectReference Include="..\TeamSystem.Data\TeamSystem.Data.csproj" />
+  </ItemGroup>
+
 </Project>
