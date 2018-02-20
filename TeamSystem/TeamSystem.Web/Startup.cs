@@ -36,7 +36,6 @@
                     options.Password.RequireNonAlphanumeric = false;
                 })
                 .AddEntityFrameworkStores<TeamSystemDbContext>()
-
                 .AddDefaultTokenProviders();
 
             services.AddAutoMapper();

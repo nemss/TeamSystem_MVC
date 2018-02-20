@@ -1,4 +1,6 @@
 ﻿@model UserListingsViewModel
+@inject UserManager<User> UserManager
+
 @{
     ViewData["Title"] = "User Administration";
 }
@@ -8,7 +10,7 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>
+            <th class="text-center">
                 Username
             </th>
             <th>
@@ -25,37 +27,47 @@
             <tr>
                 <th>
                     @user.Username
-                </th>
-                <th>
-                    @user.Email
-                </th>
-                <th>
-                    <form asp-action="AddToRole" method="post">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <input type="hidden" name="UserId" value="@user.Id" />
-                                <select name="Role" asp-items="Model.Roles" class="form-control"></select>
-                            </div>
-                            <div class="col-md-3">
-                                <input class="btn btn-sm btn-success" type="submit" value="Add Role" />
-                            </div>
-                        </div>
-                    </form>
-                    @if (User.IsInRole(WebConstants.AdministratorRole) && user.Username != User.Identity.Name)
+
+                    @{
+                        var userGetById = await UserManager.FindByIdAsync(user.Id);
+                        var userRoles = await UserManager.GetRolesAsync(userGetById);
+                    }
+
+                    @foreach (var role in userRoles)
                     {
-                        <form asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-userId="@user.Id">
+                    @role.ToString()
+                    }
+
+                    <th>
+                        @user.Email
+                    </th>
+                    <th>
+                        <form asp-action="AddToRole" method="post">
                             <div class="row">
-                                <div class="col-md-offset-9">
-                                    <button class="btn btn-sm btn-danger" type="submit">
-                                        Delete User
-                                    </button>
+                                <div class="col-md-9">
+                                    <input type="hidden" name="UserId" value="@user.Id" />
+                                    <select name="Role" asp-items="Model.Roles" class="form-control"></select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="btn btn-sm btn-success" type="submit" value="Add Role" />
                                 </div>
                             </div>
                         </form>
-                    }
-                </th>
-            </tr>
-        }
+                        @if (User.IsInRole(WebConstants.AdministratorRole) && user.Username != User.Identity.Name)
+                        {
+                            <form asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-userId="@user.Id">
+                                <div class="row">
+                                    <div class="col-md-offset-9">
+                                        <button class="btn btn-sm btn-danger" type="submit">
+                                            Delete User
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        }
+                    </th>
+                </tr>
+            }
     </tbody>
 </table>
 
