@@ -51,29 +51,30 @@
                     </ul>
                 </th>
                 <th>
-                    <form asp-action="AddToRole" method="post">
+                    <form>
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-12">
                                 <input type="hidden" name="UserId" value="@user.Id" />
                                 <select name="Role" asp-items="Model.Roles" class="form-control"></select>
                             </div>
-                            <div class="col-md-3">
-                                <input class="btn btn-sm btn-success" type="submit" value="Add Role" />
-                            </div>
                         </div>
-                    </form>
-                    @if (User.IsInRole(WebConstants.AdministratorRole) && user.Username != User.Identity.Name)
-                    {
-                        <form asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-userId="@user.Id">
-                            <div class="row">
-                                <div class="col-md-offset-9">
-                                    <button class="btn btn-sm btn-danger" type="submit">
+                        <hr/>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <button class="btn btn-sm btn-success" type="submit" asp-area="Admin" asp-controller="Users" asp-action="AddToRole" formmethod="post">
+                                    Add Role
+                                </button>
+                            </div>
+                            @if (User.IsInRole(WebConstants.AdministratorRole) && user.Username != User.Identity.Name)
+                            {
+                                <div class="col-md-offset-7">
+                                    <button class="btn btn-sm btn-danger" type="submit" asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-userId="@user.Id">
                                         Delete User
                                     </button>
                                 </div>
-                            </div>
-                        </form>
-                    }
+                            }
+                        </div>
+                    </form>
                 </th>
             </tr>
         }
