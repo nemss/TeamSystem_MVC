@@ -35,13 +35,15 @@
                             || (User.IsInRole(WebConstants.AdministratorRole)))
                         {
                             <li>
-                                <a class="navbar-link dropdown-toggle" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="navbar-link dropdown-toggle" id="dropdownMenuAdminPanel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Admin Panel
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                    <p class="li-a-p clearfix"><a asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></p>
-                                    <p class="li-a-p clearfix"><a asp-area="" asp-controller="" asp-action="">Matches</a></p>
-                                    <p class="li-a-p clearfix"><a asp-area="Blog" asp-controller="Articles" asp-action="Create">Articles</a></p>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuAdminPanel">
+                                    <div class="li-a-p clearfix"><a asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></div>
+                                    <hr/>
+                                    <div class="li-a-p clearfix"><a asp-area="" asp-controller="" asp-action="">Matches</a></div>
+                                    <hr/>
+                                    <div class="li-a-p clearfix"><a asp-area="Blog" asp-controller="Articles" asp-action="Create">Articles</a></div>
                                 </div>
                             </li>
                         }
@@ -103,5 +105,6 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+    
 </body>
 </html>

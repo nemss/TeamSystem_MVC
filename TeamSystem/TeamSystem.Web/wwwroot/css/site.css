@@ -59,4 +59,13 @@ li a:hover {
     font-size: large;
     text-align: center;
     color: inherit;
+    padding: 10px 0px;
+}
+
+.li-a-p:hover {
+    background-color: lightgray;
+}
+
+li hr {
+    margin: 0;
 }
