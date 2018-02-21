@@ -11,14 +11,15 @@
         {
         }
 
-        public virtual DbSet<Matches> Matches { get; set; }
-        public virtual DbSet<MatchHistories> MatchHistories { get; set; }
-        public virtual DbSet<ModelRoles> ModelRoles { get; set; }
-        public virtual DbSet<PersonHistories> PersonHistories { get; set; }
-        public virtual DbSet<PersonModels> PersonModels { get; set; }
-        public virtual DbSet<StartingMembersOfAteam> StartingMembersOfAteam { get; set; }
-        public virtual DbSet<StartingPlayers> StartingPlayers { get; set; }
-        public virtual DbSet<Teams> Teams { get; set; }
+        public DbSet<Matches> Matches { get; set; }
+        public DbSet<MatchHistories> MatchHistories { get; set; }
+        public DbSet<ModelRoles> ModelRoles { get; set; }
+        public DbSet<PersonHistories> PersonHistories { get; set; }
+        public DbSet<PersonModels> PersonModels { get; set; }
+        public DbSet<StartingMembersOfAteam> StartingMembersOfAteam { get; set; }
+        public DbSet<StartingPlayers> StartingPlayers { get; set; }
+        public DbSet<Teams> Teams { get; set; }
+        public DbSet<Articles> Articles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -169,6 +170,32 @@
                 entity.Property(e => e.TeamName)
                     .IsRequired()
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Articles>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.AuthorId).HasMaxLength(450);
+
+                entity.Property(e => e.Content)
+                    .IsRequired()
+                    .HasMaxLength(600);
+
+                entity.Property(e => e.PublishDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.ThumbnailUrl)
+                    .IsRequired()
+                    .HasMaxLength(2040);
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.Author)
+                    .WithMany(p => p.Articles)
+                    .HasForeignKey(d => d.AuthorId)
+                    .HasConstraintName("FK_Articles_AspNetUsers");
             });
 
             base.OnModelCreating(modelBuilder);
