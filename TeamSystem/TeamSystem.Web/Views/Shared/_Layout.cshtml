@@ -30,16 +30,28 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (User.IsInRole(WebConstants.AdministratorRole))
-                    {
-                        <li><a asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></li>
+                    @{
+                        if ((User.IsInRole(WebConstants.AdministratorRole) && User.IsInRole(WebConstants.BlogAuthorRole)) 
+                            || (User.IsInRole(WebConstants.AdministratorRole)))
+                        {
+                            <li>
+                                <a class="navbar-link dropdown-toggle" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Admin Panel
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                    <p class="li-a-p clearfix"><a asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></p>
+                                    <p class="li-a-p clearfix"><a asp-area="" asp-controller="" asp-action="">Matches</a></p>
+                                    <p class="li-a-p clearfix"><a asp-area="Blog" asp-controller="Articles" asp-action="Create">Articles</a></p>
+                                </div>
+                            </li>
+                        }
+                        else if (User.IsInRole(WebConstants.BlogAuthorRole))
+                        {
+                            <li><a asp-area="Blog" asp-controller="Articles" asp-action="Create">Articles</a></li>
+                        }
                     }
-
-                    @if (User.IsInRole(WebConstants.BlogAuthorRole))
-                    {
-                        <li><a asp-area="Blog" asp-controller="Articles" asp-action="Create">Publish Article</a></li>
-                    }
-
+                    
+                    <li><a asp-area="" asp-controller="" asp-action="">News</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>

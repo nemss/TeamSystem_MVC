@@ -32,14 +32,31 @@
     .carousel-caption {
         display: none;
     }
+    .li-a-p a:hover {
+        color: whitesmoke;
+    }
+
+    .li-a-p a{
+        color: darkgray;
+    }
 }
 
 table th { 
-    text-align: center;
+    text-align: center !important;
 }
 
 hr {
     margin-top: 10px;
     margin-bottom: 10px;
+}
 
+li a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.li-a-p{
+    font-size: large;
+    text-align: center;
+    color: inherit;
 }
