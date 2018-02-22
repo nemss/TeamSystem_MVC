@@ -174,9 +174,9 @@
 
             modelBuilder.Entity<Articles>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.AuthorId).HasMaxLength(450);
+                entity.Property(e => e.AuthorId)
+                    .IsRequired()
+                    .HasMaxLength(450);
 
                 entity.Property(e => e.Content)
                     .IsRequired()
@@ -195,7 +195,8 @@
                 entity.HasOne(d => d.Author)
                     .WithMany(p => p.Articles)
                     .HasForeignKey(d => d.AuthorId)
-                    .HasConstraintName("FK_Articles_AspNetUsers");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Articles__Author__59063A47");
             });
 
             base.OnModelCreating(modelBuilder);

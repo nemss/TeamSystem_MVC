@@ -4,30 +4,28 @@
     ViewData["Title"] = "News";
 }
 
-<div class="jumbotron home-jumbotron">
-    <h2 class="home-jumbotron-text">Car Reviews</h2>
-</div>
-
-<div class="row">
-    <form asp-area="" asp-controller="Home" asp-action="Search">
-        <div class="col-md-2 pull-right">
-            <button type="submit" class="btn  pull-right"><span class="glyphicon glyphicon-search"></span> Search</button>
-        </div>
-        <div class="col-md-4 pull-right">
-            <input required asp-for="SearchText" class="form-control" placeholder="Search..." />
-        </div>
-    </form>
-</div>
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr/>
+<form asp-area="" asp-controller="Home" asp-action="Search">
+    <div class="row">
+            <div class="col-md-4 col-md-offset-6">
+                <input required asp-for="SearchText" class="form-control clearfix" placeholder="Search..." />
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn center-block clearfix btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
+            </div>
+    </div>
+</form>
 <br />
 
 <div class="row">
 
     @foreach (var article in Model.Articles)
     {
-        <div class="col-sm-4 thumbnail">
+        <div class="col-sm-3 thumbnail">
             <div class="text-center">
                 <h3 class="article-title">@article.Title</h3>
-                <img src="@article.ThumbnailUrl" class="img-responsive img-center" />
+                <img src="@article.ThumbnailUrl" class="img-responsive" alt=""/>
                 <ul class="list-group">
                     <li class="list-group-item"><b>Release Date:</b> @article.PublishDate.ToShortDateString()</li>
                     <li class="list-group-item"><b>Author:</b> @article.Author</li>

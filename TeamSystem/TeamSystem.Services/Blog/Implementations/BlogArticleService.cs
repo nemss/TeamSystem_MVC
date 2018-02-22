@@ -26,7 +26,7 @@
                 Title = title,
                 Content = content,
                 ThumbnailUrl = thumbnailUrl,
-                PublishDate = DateTime.UtcNow,
+                PublishDate = DateTime.Now,
                 AuthorId = authorId
             };
 

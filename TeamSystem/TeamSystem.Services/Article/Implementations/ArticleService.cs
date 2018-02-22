@@ -22,8 +22,6 @@
            => await this.db
                .Articles
                .OrderByDescending(a => a.PublishDate)
-               .Skip((page - 1) * ServiceConstants.ArticlesPageSize)
-               .Take(ServiceConstants.ArticlesPageSize)
                .ProjectTo<ArticlesListingServiceModel>()
                .ToListAsync();
 

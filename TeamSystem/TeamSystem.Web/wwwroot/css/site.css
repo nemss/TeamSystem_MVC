@@ -85,3 +85,13 @@ hr {
 li hr {
     margin: 0;
 }
+
+img {
+    height: 200px !important;
+    margin: auto;
+    padding-bottom: 10px;
+}
+
+.thumbnail {
+    margin: 0 0 20px 8% !important;
+}
