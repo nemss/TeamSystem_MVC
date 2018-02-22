@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using TeamSystem.Data.Models;
-using TeamSystem.Services.Article.Interfaces;
-using TeamSystem.Web.Models.Articles;
-
-namespace TeamSystem.Web.Controllers
+﻿namespace TeamSystem.Web.Controllers
 {
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
+    using TeamSystem.Data.Models;
+    using TeamSystem.Services.Article.Interfaces;
+    using TeamSystem.Web.Models.Articles;
+
     public class ArticlesController : Controller
     {
         private readonly IArticleService articles;

@@ -43,13 +43,13 @@
                                     <hr/>
                                     <a asp-area="" asp-controller="" asp-action=""><div class="clearfix">Matches</div></a>
                                     <hr/>
-                                    <a asp-area="Blog" asp-controller="Articles" asp-action="Create"><div class="clearfix">Articles</div></a>
+                                    <a asp-area="Blog" asp-controller="Articles" asp-action="Create"><div class="clearfix">Publish Article</div></a>
                                 </div>
                             </li>
                         }
                         else if (User.IsInRole(WebConstants.BlogAuthorRole))
                         {
-                            <li><a asp-area="Blog" asp-controller="Articles" asp-action="Create">Articles</a></li>
+                            <li><a asp-area="Blog" asp-controller="Articles" asp-action="Create">Publish Article</a></li>
                         }
                     }
                     
