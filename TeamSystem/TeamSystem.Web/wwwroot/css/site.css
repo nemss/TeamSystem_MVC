@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: FertigoP;
 }
 
 /* Wrapping element */
@@ -26,18 +27,26 @@
     margin: 15px;
 }
 
+@font-face {
+    font-family: "FertigoP";
+    src: url('../lib/bootstrap/dist/fonts/fertigo_pro.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */
     .carousel-caption {
         display: none;
     }
-    .li-a-p a:hover {
-        color: whitesmoke;
+
+    .dropdown a div {
+        color: whitesmoke !important;
     }
 
-    .li-a-p a{
-        color: darkgray;
+    .dropdown a div:hover{
+        background-color: orangered !important;
     }
 }
 
@@ -50,20 +59,27 @@ hr {
     margin-bottom: 10px;
 }
 
-li a:hover {
-    text-decoration: none;
+.navbar-nav a, .navbar-header a, .navbar-nav button{
+    color: whitesmoke !important;
+    text-decoration: none !important;
     cursor: pointer;
 }
 
-.li-a-p{
-    font-size: large;
-    text-align: center;
-    color: inherit;
-    padding: 10px 0px;
+.navbar-nav a:hover , .navbar-header a:hover, .navbar-nav button:hover{
+    background-color: orangered !important;
 }
 
-.li-a-p:hover {
-    background-color: lightgray;
+.dropdown a div {
+    color: black;
+    font-size: large;
+    text-decoration: none;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.dropdown a div:hover {
+    background-color: #f1f1f1;
+    text-decoration: none;
 }
 
 li hr {

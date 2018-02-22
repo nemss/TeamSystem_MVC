@@ -34,16 +34,16 @@
                         if ((User.IsInRole(WebConstants.AdministratorRole) && User.IsInRole(WebConstants.BlogAuthorRole)) 
                             || (User.IsInRole(WebConstants.AdministratorRole)))
                         {
-                            <li>
+                            <li class="dropdown">
                                 <a class="navbar-link dropdown-toggle" id="dropdownMenuAdminPanel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Admin Panel
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuAdminPanel">
-                                    <div class="li-a-p clearfix"><a asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></div>
+                                    <a asp-area="Admin" asp-controller="Users" asp-action="Index"><div class="clearfix">Users</div></a>
                                     <hr/>
-                                    <div class="li-a-p clearfix"><a asp-area="" asp-controller="" asp-action="">Matches</a></div>
+                                    <a asp-area="" asp-controller="" asp-action=""><div class="clearfix">Matches</div></a>
                                     <hr/>
-                                    <div class="li-a-p clearfix"><a asp-area="Blog" asp-controller="Articles" asp-action="Create">Articles</a></div>
+                                    <a asp-area="Blog" asp-controller="Articles" asp-action="Create"><div class="clearfix">Articles</div></a>
                                 </div>
                             </li>
                         }
