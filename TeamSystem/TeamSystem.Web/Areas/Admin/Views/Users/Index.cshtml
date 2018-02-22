@@ -60,15 +60,20 @@
                         </div>
                         <hr/>
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <button class="btn btn-sm btn-success" type="submit" asp-area="Admin" asp-controller="Users" asp-action="AddToRole" formmethod="post">
                                     Add Role
                                 </button>
                             </div>
                             @if (User.IsInRole(WebConstants.AdministratorRole) && user.Username != User.Identity.Name)
                             {
-                                <div class="col-md-offset-7">
-                                    <button class="btn btn-sm btn-danger" type="submit" asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-userId="@user.Id">
+                                <div class="col-md-4">
+                                    <button class="btn btn-sm btn-success" type="submit" asp-area="Admin" asp-controller="Users" asp-action="RemoveRole" formmethod="post">
+                                        Remove Role
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-sm btn-danger" type="submit" asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" formmethod="post">
                                         Delete User
                                     </button>
                                 </div>

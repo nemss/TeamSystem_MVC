@@ -52,11 +52,12 @@
         {
             var roleExists = await this.roleManager.RoleExistsAsync(model.Role);
             var user = await this.userManager.FindByIdAsync(model.UserId);
+            var userRoles = await this.userManager.GetRolesAsync(user);
             var userExists = user != null;
 
             if (!roleExists || !userExists)
             {
-                ModelState.AddModelError(string.Empty, "Invalid identity details.");
+                ModelState.AddModelError(string.Empty, "Invalid identity details !");
             }
 
             if (!ModelState.IsValid)
@@ -64,9 +65,15 @@
                 return RedirectToAction(nameof(Index));
             }
 
+            if(userRoles.Contains(model.Role))
+            {
+                TempData.AddErrorMessage($"User {user.UserName} is already added to the {model.Role} role !");
+                return RedirectToAction(nameof(Index));
+            }
+
             await this.userManager.AddToRoleAsync(user, model.Role);
 
-            TempData.AddSuccessMessage($"User {user.UserName} successfully added to the {model.Role} role.");
+            TempData.AddSuccessMessage($"User {user.UserName} successfully added to the {model.Role} role !");
             return RedirectToAction(nameof(Index));
         }
 
@@ -101,8 +108,26 @@
 
             await this.users.DeleteAsync(findUserById.Id);
 
-            TempData.AddSuccessMessage($"User {findUserById.UserName} successfully deleted ");
+            TempData.AddSuccessMessage($"User {findUserById.UserName} successfully deleted !");
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveRole(RemoveUserToRoleFormModel model)
+        {
+            var user = await this.userManager.FindByIdAsync(model.UserId);
+            var userRoles = await this.userManager.GetRolesAsync(user);
+
+            if(!userRoles.Contains(model.Role))
+            {
+                TempData.AddErrorMessage($"No such role found for user {user.UserName} !");
+                return RedirectToAction(nameof(Index));
+            }
+
+            await this.userManager.RemoveFromRoleAsync(user, model.Role);
+
+            TempData.AddSuccessMessage($"Successfuly removed role {model.Role} from user {user.UserName} !");
             return RedirectToAction(nameof(Index));
         }
     }
