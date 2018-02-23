@@ -63,11 +63,11 @@
             await this.db.SaveChangesAsync();
         }
 
-        //public async Task<BlogArticleDetailsServiceModel> ById(int id)
-        //=> await this.db
-        //        .Articles
-        //        .Where(a => a.Id == id)
-        //        .ProjectTo<BlogArticleDetailsServiceModel>()
-        //        .FirstOrDefaultAsync();
+        public async Task<BlogArticleDetailsServiceModel> ById(int id)
+            => await this.db
+                           .Articles
+                           .Where(a => a.Id == id)
+                           .ProjectTo<BlogArticleDetailsServiceModel>()
+                           .FirstOrDefaultAsync();
     }
 }

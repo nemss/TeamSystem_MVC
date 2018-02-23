@@ -11,6 +11,6 @@
 
         Task DeleteAsync(int id);
 
-        //Task<BlogArticleDetailsServiceModel> ById(int id);
+        Task<BlogArticleDetailsServiceModel> ById(int id);
     }
 }

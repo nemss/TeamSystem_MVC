@@ -8,6 +8,7 @@
     using TeamSystem.Services.Blog.Interfaces;
     using TeamSystem.Services.Html;
     using TeamSystem.Web.Areas.Blog.Models;
+    using TeamSystem.Web.Infrastructure.Extensions;
     using TeamSystem.Web.Infrastructure.Filters;
 
     [Area(WebConstants.BlogArea)]
@@ -43,6 +44,79 @@
 
             return RedirectToAction(
                 nameof(Web.Controllers.HomeController.Index),
+                "Articles",
+                new { area = string.Empty });
+        }
+
+        //GET: /blog/articles/edit/{id}
+        public async Task<IActionResult> Edit(int id)
+        {
+            var articleFindById = await this.articles.ById(id);
+
+            if (articleFindById == null)
+            {
+                return NotFound();
+            }
+
+            return View(new ArticleFormModel
+            {
+                Title = articleFindById.Title,
+                Content = articleFindById.Content,
+                ThumbnailUrl = articleFindById.ThumbnailUrl
+            });
+        }
+
+        //POST: /blog/articles/edit/{id}
+        [HttpPost]
+        [ValidateModelState]
+        public async Task<IActionResult> Edit(int id, ArticleFormModel model)
+        {
+            await this.articles.EditAsync(id, model.Title, model.Content, model.ThumbnailUrl);
+
+            TempData.AddSuccessMessage($"Article {model.Title} successfully edited!");
+
+            return RedirectToAction(
+                nameof(Web.Controllers.NewsController.Index),
+                "Articles",
+                new { area = string.Empty });
+        }
+
+        //GET: /blog/articles/delete/{id}
+        public async Task<IActionResult> Delete(int id)
+        {
+            var articleFindById = await this.articles.ById(id);
+
+            if (articleFindById == null)
+            {
+                return NotFound();
+            }
+
+            return View(new ArticleFormModel
+            {
+                Id = articleFindById.Id,
+                Title = articleFindById.Title,
+                Content = articleFindById.Content,
+                ThumbnailUrl = articleFindById.ThumbnailUrl
+            });
+        }
+
+        //POST: /blog/articles/delete/{id}
+        [HttpPost]
+        public async Task<IActionResult> Destroy(int id)
+        {
+            var articleFindById = await this.articles.ById(id);
+
+            if (articleFindById == null)
+            {
+                return NotFound();
+            }
+
+            await this.articles.DeleteAsync(id);
+
+            TempData.AddSuccessMessage($"Article {articleFindById.Title} successfully deleted!");
+
+            return RedirectToAction(
+                nameof(Web.Controllers.NewsController.Index),
                 "Articles",
                 new { area = string.Empty });
         }

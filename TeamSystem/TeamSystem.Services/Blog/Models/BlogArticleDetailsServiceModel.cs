@@ -1,12 +1,12 @@
 ﻿namespace TeamSystem.Services.Blog.Models
 {
+    using AutoMapper;
     using System;
     using System.ComponentModel.DataAnnotations;
-    using AutoMapper;
     using TeamSystem.Common.Mapping;
     using TeamSystem.Data.Models;
 
-    class BlogArticleDetailsServiceModel : IMapFrom<Articles>, IHaveCustomMapping
+    public class BlogArticleDetailsServiceModel : IMapFrom<Articles>, IHaveCustomMapping
     {
         public int Id { get; set; }
 
@@ -26,7 +26,5 @@
             => mapper
                 .CreateMap<Articles, BlogArticleDetailsServiceModel>()
                 .ForMember(a => a.Author, cfg => cfg.MapFrom(a => a.Author.UserName));
-
-        
     }
 }

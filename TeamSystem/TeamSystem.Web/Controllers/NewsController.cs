@@ -7,19 +7,19 @@
     using TeamSystem.Services.Article.Interfaces;
     using TeamSystem.Web.Models.Articles;
 
-    public class ArticlesController : Controller
+    public class NewsController : Controller
     {
         private readonly IArticleService articles;
         private readonly UserManager<User> userManager;
 
-        public ArticlesController(IArticleService articles,
+        public NewsController(IArticleService articles,
                                   UserManager<User> userManager)
         {
             this.articles = articles;
             this.userManager = userManager;
         }
 
-        //GET: /articles/
+        //GET: /news/
         public async Task<IActionResult> Index(int page = 1)
             => View(new ArticleListingViewModel
             {
@@ -27,5 +27,18 @@
                 TotalArticles = await this.articles.TotalAsync(),
                 CurrentPage = page
             });
+
+        //GET: /news/details
+        public async Task<IActionResult> Details(int id)
+        {
+            var articleFindById = await this.articles.ById(id);
+
+            if (articleFindById == null)
+            {
+                return NotFound();
+            }
+
+            return this.View(articleFindById);
+        }
     }
 }
