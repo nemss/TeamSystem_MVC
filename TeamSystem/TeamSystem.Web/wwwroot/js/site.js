@@ -1,5 +1,5 @@
 ﻿// Write your JavaScript code.
-$(document).ready(function () {
+$( function () {
     if ($(window).width() > 768) {
             $("#dropdownMenuAdminPanel").hover(
                 function () {
