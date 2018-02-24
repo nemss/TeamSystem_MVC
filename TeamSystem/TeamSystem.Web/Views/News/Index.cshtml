@@ -8,11 +8,9 @@
 <hr/>
 <form asp-area="" asp-controller="Home" asp-action="Search">
     <div class="row">
-            <div class="col-md-4 col-md-offset-6">
+            <div class="col-md-5 col-md-offset-7">
                 <input required asp-for="SearchText" class="form-control clearfix" placeholder="Search..." />
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn center-block clearfix btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
+                <button type="submit" class="btn btn-primary clearfix pull-right"><span class="glyphicon glyphicon-search"></span> Search</button>
             </div>
     </div>
 </form>
