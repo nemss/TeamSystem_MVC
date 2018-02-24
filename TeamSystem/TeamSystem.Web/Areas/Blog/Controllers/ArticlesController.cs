@@ -44,7 +44,7 @@
 
             return RedirectToAction(
                 nameof(Web.Controllers.HomeController.Index),
-                "Articles",
+                "News",
                 new { area = string.Empty });
         }
 
@@ -77,7 +77,7 @@
 
             return RedirectToAction(
                 nameof(Web.Controllers.NewsController.Index),
-                "Articles",
+                "News",
                 new { area = string.Empty });
         }
 
@@ -117,7 +117,7 @@
 
             return RedirectToAction(
                 nameof(Web.Controllers.NewsController.Index),
-                "Articles",
+                "News",
                 new { area = string.Empty });
         }
     }
