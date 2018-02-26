@@ -8,6 +8,7 @@
     using TeamSystem.Data;
     using TeamSystem.Services.Article.Interfaces;
     using TeamSystem.Services.Article.Models;
+    using TeamSystem.Services;
 
     public class ArticleService : IArticleService
     {
@@ -22,6 +23,8 @@
            => await this.db
                .Articles
                .OrderByDescending(a => a.PublishDate)
+               .Skip((page - 1) * ServiceConstants.ArticlesPageSize)
+               .Take(ServiceConstants.ArticlesPageSize)
                .ProjectTo<ArticlesListingServiceModel>()
                .ToListAsync();
 

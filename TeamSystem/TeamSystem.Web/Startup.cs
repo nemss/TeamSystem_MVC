@@ -25,7 +25,7 @@
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<TeamSystemDbContext>(options => options
-                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.UseRowNumberForPaging()));
 
             services
                 .AddIdentity<User, IdentityRole>(options =>
