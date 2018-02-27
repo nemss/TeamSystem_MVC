@@ -35,6 +35,7 @@
 </div>
 @if (Model.TotalArticles > Model.Articles.Count())
 {
+    <div class="text-center">
     <ul class="pagination">
         <li class="page-item "><a class="page-link btn" asp-route-page="@Model.PreviousPage">Previous</a></li>
         @for (int i = 1; i <= Model.TotalPages; i++)
@@ -43,4 +44,5 @@
         }
         <li class="page-item"><a class="page-link btn" asp-route-page="@Model.NextPage">Next</a></li>
     </ul>
+    </div>
 }
