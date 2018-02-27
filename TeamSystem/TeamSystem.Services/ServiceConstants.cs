@@ -2,6 +2,6 @@
 {
     public class ServiceConstants
     {
-        public const int ArticlesPageSize = 4;
+        public const int ArticlesPageSize = 6;
     }
 }

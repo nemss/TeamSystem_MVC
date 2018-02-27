@@ -48,6 +48,10 @@
     .dropdown a div:hover{
         background-color: orangered !important;
     }
+
+    .thumbnail {
+        margin: 0 2% 20px 2% !important;
+    }
 }
 
 table th { 
@@ -93,5 +97,10 @@ img {
 }
 
 .thumbnail {
-    margin: 0 0 20px 8% !important;
+    margin: 0 0 20px 8%;
+    height: 427px;
+}
+
+.pagination li a{
+    margin-right: 10px;
 }
