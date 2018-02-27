@@ -58,7 +58,7 @@
                                 <select name="Role" asp-items="Model.Roles" class="form-control"></select>
                             </div>
                         </div>
-                        <hr/>
+                        <hr />
                         <div class="row">
                             <div class="col-md-4">
                                 <button class="btn btn-sm btn-success" type="submit" asp-area="Admin" asp-controller="Users" asp-action="AddToRole" formmethod="post">
@@ -85,3 +85,17 @@
         }
     </tbody>
 </table>
+
+@if (Model.TotalUsers > Model.Users.Count())
+{
+    <div class="text-center">
+        <ul class="pagination">
+            <li class="page-item "><a class="page-link btn" asp-route-page="@Model.PreviousPage">Previous</a></li>
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(Model.CurrentPage == i ? "active" : string.Empty) "><a class="page-link btn" asp-route-page="@i">@i</a></li>
+            }
+            <li class="page-item"><a class="page-link btn" asp-route-page="@Model.NextPage">Next</a></li>
+        </ul>
+    </div>
+}

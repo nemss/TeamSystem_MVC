@@ -6,8 +6,10 @@
 
     public interface IAdminUserService
     {
-        Task<IEnumerable<AdminUserListingServiceModel>> AllAsync();
+        Task<IEnumerable<AdminUserListingServiceModel>> AllAsync(int page = 1);
 
         Task DeleteAsync(string userId);
+
+        Task<int> TotalAsync();
     }
 }

@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Linq;
     using TeamSystem.Data;
     using TeamSystem.Services.Admin.Interfaces;
     using TeamSystem.Services.Admin.Models;
@@ -17,11 +18,14 @@
             this.db = db;
         }
 
-        public async Task<IEnumerable<AdminUserListingServiceModel>> AllAsync()
+        public async Task<IEnumerable<AdminUserListingServiceModel>> AllAsync(int page = 1)
             => await this.db
-            .Users
-            .ProjectTo<AdminUserListingServiceModel>()
-            .ToListAsync();
+                .Users
+                .OrderBy(u => u.UserName)
+                .Skip((page - 1) * ServiceConstants.UsersPageSize)
+                .Take(ServiceConstants.UsersPageSize)
+                .ProjectTo<AdminUserListingServiceModel>()
+                .ToListAsync();
 
 
         public async Task DeleteAsync(string userId)
@@ -36,5 +40,8 @@
             this.db.Users.Remove(findUserById);
             await this.db.SaveChangesAsync();
         }
+
+        public async Task<int> TotalAsync()
+            => await this.db.Users.CountAsync();
     }
 }

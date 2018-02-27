@@ -27,9 +27,9 @@
         }
 
         //GET: /admin/users/
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            var users = await this.users.AllAsync();
+            var users = await this.users.AllAsync(page);
             var roles = await this.roleManager
                 .Roles
                 .Select(r => new SelectListItem
@@ -42,7 +42,9 @@
             return View(new UserListingsViewModel
             {
                 Users = users,
-                Roles = roles
+                Roles = roles,
+                TotalUsers = await this.users.TotalAsync(),
+                CurrentPage = page
             });
         }
 
