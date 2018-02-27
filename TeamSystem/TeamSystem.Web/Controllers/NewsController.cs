@@ -40,5 +40,13 @@
 
             return this.View(articleFindById);
         }
+
+        //GET: /news/search
+        public async Task<IActionResult> Search(SearchViewModel model)
+        {
+            model.Articles = await this.articles.FindAsync(model.SearchText);
+
+            return View(model);
+        }
     }
 }
