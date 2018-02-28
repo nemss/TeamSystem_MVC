@@ -52,30 +52,27 @@
         [HttpPost]
         public async Task<IActionResult> AddToRole(AddUserToRoleFormModel model)
         {
-            var roleExists = await this.roleManager.RoleExistsAsync(model.Role);
             var user = await this.userManager.FindByIdAsync(model.UserId);
             var userRoles = await this.userManager.GetRolesAsync(user);
-            var userExists = user != null;
-
-            if (!roleExists || !userExists)
-            {
-                ModelState.AddModelError(string.Empty, "Invalid identity details !");
-            }
 
             if (!ModelState.IsValid)
             {
                 return RedirectToAction(nameof(Index));
             }
 
-            if(userRoles.Contains(model.Role))
+            foreach (var role in model.Roles)
             {
-                TempData.AddErrorMessage($"User {user.UserName} is already added to the {model.Role} role !");
-                return RedirectToAction(nameof(Index));
+                if(userRoles.Contains(role))
+                {
+                    TempData.AddErrorMessage($"User {user.UserName} is already added to the {role} role !");
+                }
+                else
+                {
+                    await this.userManager.AddToRoleAsync(user, role);
+                    TempData.AddSuccessMessage($"User {user.UserName} successfully added to the {role} role !");
+                }
             }
 
-            await this.userManager.AddToRoleAsync(user, model.Role);
-
-            TempData.AddSuccessMessage($"User {user.UserName} successfully added to the {model.Role} role !");
             return RedirectToAction(nameof(Index));
         }
 
@@ -121,15 +118,19 @@
             var user = await this.userManager.FindByIdAsync(model.UserId);
             var userRoles = await this.userManager.GetRolesAsync(user);
 
-            if(!userRoles.Contains(model.Role))
+            foreach (var role in model.Roles)
             {
-                TempData.AddErrorMessage($"No such role found for user {user.UserName} !");
-                return RedirectToAction(nameof(Index));
+                if (!userRoles.Contains(role))
+                {
+                    TempData.AddErrorMessage($"No role {role} found for user {user.UserName} !");
+                }
+                else
+                {
+                    await this.userManager.RemoveFromRoleAsync(user, role);
+                    TempData.AddSuccessMessage($"Successfuly removed role {role} from user {user.UserName} !");
+                }
             }
 
-            await this.userManager.RemoveFromRoleAsync(user, model.Role);
-
-            TempData.AddSuccessMessage($"Successfuly removed role {model.Role} from user {user.UserName} !");
             return RedirectToAction(nameof(Index));
         }
     }

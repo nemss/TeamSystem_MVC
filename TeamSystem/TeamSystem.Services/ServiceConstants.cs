@@ -4,6 +4,6 @@
     {
         public const int ArticlesPageSize = 6;
 
-        public const int UsersPageSize = 6;
+        public const int UsersPageSize = 3;
     }
 }

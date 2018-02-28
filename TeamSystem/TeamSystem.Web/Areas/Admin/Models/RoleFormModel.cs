@@ -1,5 +1,6 @@
 ﻿namespace TeamSystem.Web.Areas.Admin.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public abstract class RoleFormModel
@@ -8,6 +9,6 @@
         public string UserId { get; set; }
 
         [Required]
-        public string Role { get; set; }
+        public IEnumerable<string> Roles { get; set; }
     }
 }
