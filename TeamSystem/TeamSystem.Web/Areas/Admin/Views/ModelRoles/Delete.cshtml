@@ -1,0 +1,21 @@
+﻿@model ModelRolesFormModel
+
+@{
+    ViewData["Title"] = "Delete Role";
+}
+
+<div class="row">
+    <h2 class="text-center">@ViewData["Title"]</h2>
+    <hr />
+    <div class="col-md-8 col-md-offset-2">
+        <form method="post" action="/admin/modelroles/destroy/@Model.Id">
+            <div class="form-group">
+                <label asp-for="RoleName"></label>
+                <input disabled asp-for="RoleName" class="form-control" />
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-danger center-block">Delete Role</button>
+        </form>
+    </div>
+</div>
+
