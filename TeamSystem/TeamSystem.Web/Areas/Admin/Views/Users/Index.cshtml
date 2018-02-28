@@ -57,7 +57,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <button class="btn btn-sm btn-success" type="submit" asp-area="Admin" asp-controller="Users" asp-action="ManageRole" formmethod="post">
-                                    Save Roles
+                                    Change Roles
                                 </button>
                             </div>
                             @if (User.IsInRole(WebConstants.AdministratorRole) && user.Username != User.Identity.Name)

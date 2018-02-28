@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using TeamSystem.Data.Models;
@@ -48,8 +49,7 @@
             });
         }
 
-        //POST: /admin/users/AddToRole
-        [HttpPost]
+        //GET: /admin/users/ManageRole
         public async Task<IActionResult> ManageRole(RolesFormModel model)
         {
             var user = await this.userManager.FindByIdAsync(model.UserId);
@@ -60,26 +60,42 @@
                 return RedirectToAction(nameof(Index));
             }
 
-            if (model.Roles is null)
+            return View(new UserManageRoleForm
             {
-                foreach (var role in userRoles)
+                UserId = model.UserId,
+                Username = user.UserName,
+                UserCurrentRoles = GetSelectListItems(userRoles),
+                UserNewRoles = GetSelectListItems(model.Roles)
+            });
+        }
+
+        //POST: /admin/users/ManageRole
+        [HttpPost]
+        public async Task<IActionResult> Manage(UserManageRoleForm model)
+        {
+            var user = await this.userManager.FindByIdAsync(model.UserId);
+
+            if (model.UserNewRoles.Count() == 0)
+            {
+                foreach (var role in model.UserCurrentRoles)
                 {
-                    await this.userManager.RemoveFromRoleAsync(user, role);
+                    await this.userManager.RemoveFromRoleAsync(user, role.Text);
                 }
                 TempData.AddSuccessMessage($"Successfuly removed selected roles from user {user.UserName} !");
             }
             else
             {
-                foreach (var role in userRoles)
+                foreach (var role in model.UserCurrentRoles)
                 {
-                    await this.userManager.RemoveFromRoleAsync(user, role);
+                    await this.userManager.RemoveFromRoleAsync(user, role.Text);
                 }
-                foreach (var role in model.Roles)
+                foreach (var role in model.UserNewRoles)
                 {
-                    await this.userManager.AddToRoleAsync(user, role);
+                    await this.userManager.AddToRoleAsync(user, role.Text);
                 }
                 TempData.AddSuccessMessage($"User {user.UserName} successfully added to the selected roles !");
             }
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -119,26 +135,20 @@
             return RedirectToAction(nameof(Index));
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> RemoveRole(RemoveUserToRoleFormModel model)
-        //{
-        //    var user = await this.userManager.FindByIdAsync(model.UserId);
-        //    var userRoles = await this.userManager.GetRolesAsync(user);
+        private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<string> elements)
+        {
+            var selectList = new List<SelectListItem>();
 
-        //    foreach (var role in model.Roles)
-        //    {
-        //        if (!userRoles.Contains(role))
-        //        {
-        //            TempData.AddErrorMessage($"No role {role} found for user {user.UserName} !");
-        //        }
-        //        else
-        //        {
-        //            await this.userManager.RemoveFromRoleAsync(user, role);
-        //            TempData.AddSuccessMessage($"Successfuly removed role {role} from user {user.UserName} !");
-        //        }
-        //    }
+            foreach (var element in elements)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = element,
+                    Text = element
+                });
+            }
 
-        //    return RedirectToAction(nameof(Index));
-        //}
+            return selectList;
+        }
     }
 }

@@ -1,0 +1,41 @@
+﻿@model UserManageRoleForm
+@{
+    ViewData["Title"] = $"Manage Roles on User - {Model.Username}";
+}
+
+<div class="row text-center">
+    <h2>@ViewData["Title"]</h2>
+    <hr/>
+        <form method="post" action="/admin/users/manage">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1">
+                    <h3>Current Roles:</h3>
+                    @if (Model.UserCurrentRoles != null)
+                    {
+                        @foreach (var item in Model.UserCurrentRoles)
+                        {
+                            <p>@item.Text</p>
+                        }
+                    }
+                </div>
+                <div class="col-md-4 col-md-offset-2">
+                    <h3>New Roles:</h3>
+                    @if (Model.UserNewRoles != null)
+                    {
+                        @foreach (var item in Model.UserNewRoles)
+                        {
+                            <p>@item.Text</p>
+                        }
+                    }
+                </div>
+            </div>
+            <br/>
+            <input type="hidden" asp-for="UserId" value="@Model.UserId" />
+            <input type="hidden" asp-for="UserCurrentRoles" value="@Model.UserCurrentRoles"/>
+            <input type="hidden" asp-for="UserNewRoles" value="@Model.UserNewRoles"/>
+            <button type="submit" class="btn btn-danger">Change Roles</button>
+            <button class="btn btn-primary" asp-action="Index" asp-controller="Users">Cancel</button>
+        </form>
+        <br/>
+</div>
+
