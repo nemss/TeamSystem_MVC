@@ -50,7 +50,7 @@
 
         //POST: /admin/users/AddToRole
         [HttpPost]
-        public async Task<IActionResult> AddToRole(AddUserToRoleFormModel model)
+        public async Task<IActionResult> ManageRole(RolesFormModel model)
         {
             var user = await this.userManager.FindByIdAsync(model.UserId);
             var userRoles = await this.userManager.GetRolesAsync(user);
@@ -60,19 +60,26 @@
                 return RedirectToAction(nameof(Index));
             }
 
-            foreach (var role in model.Roles)
+            if (model.Roles is null)
             {
-                if(userRoles.Contains(role))
+                foreach (var role in userRoles)
                 {
-                    TempData.AddErrorMessage($"User {user.UserName} is already added to the {role} role !");
+                    await this.userManager.RemoveFromRoleAsync(user, role);
                 }
-                else
+                TempData.AddSuccessMessage($"Successfuly removed selected roles from user {user.UserName} !");
+            }
+            else
+            {
+                foreach (var role in userRoles)
+                {
+                    await this.userManager.RemoveFromRoleAsync(user, role);
+                }
+                foreach (var role in model.Roles)
                 {
                     await this.userManager.AddToRoleAsync(user, role);
-                    TempData.AddSuccessMessage($"User {user.UserName} successfully added to the {role} role !");
                 }
+                TempData.AddSuccessMessage($"User {user.UserName} successfully added to the selected roles !");
             }
-
             return RedirectToAction(nameof(Index));
         }
 
@@ -112,26 +119,26 @@
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> RemoveRole(RemoveUserToRoleFormModel model)
-        {
-            var user = await this.userManager.FindByIdAsync(model.UserId);
-            var userRoles = await this.userManager.GetRolesAsync(user);
+        //[HttpPost]
+        //public async Task<IActionResult> RemoveRole(RemoveUserToRoleFormModel model)
+        //{
+        //    var user = await this.userManager.FindByIdAsync(model.UserId);
+        //    var userRoles = await this.userManager.GetRolesAsync(user);
 
-            foreach (var role in model.Roles)
-            {
-                if (!userRoles.Contains(role))
-                {
-                    TempData.AddErrorMessage($"No role {role} found for user {user.UserName} !");
-                }
-                else
-                {
-                    await this.userManager.RemoveFromRoleAsync(user, role);
-                    TempData.AddSuccessMessage($"Successfuly removed role {role} from user {user.UserName} !");
-                }
-            }
+        //    foreach (var role in model.Roles)
+        //    {
+        //        if (!userRoles.Contains(role))
+        //        {
+        //            TempData.AddErrorMessage($"No role {role} found for user {user.UserName} !");
+        //        }
+        //        else
+        //        {
+        //            await this.userManager.RemoveFromRoleAsync(user, role);
+        //            TempData.AddSuccessMessage($"Successfuly removed role {role} from user {user.UserName} !");
+        //        }
+        //    }
 
-            return RedirectToAction(nameof(Index));
-        }
+        //    return RedirectToAction(nameof(Index));
+        //}
     }
 }

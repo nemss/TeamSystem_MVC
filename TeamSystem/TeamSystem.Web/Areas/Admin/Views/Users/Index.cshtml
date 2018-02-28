@@ -17,10 +17,7 @@
                 E-mail
             </th>
             <th>
-                User Roles
-            </th>
-            <th>
-                Actions
+                Actions and Roles
             </th>
         </tr>
     </thead>
@@ -35,49 +32,37 @@
                     @user.Email
                 </th>
                 <th>
-                    @{
-                        var userById = await UserManager.FindByIdAsync(user.Id);
-                        var userRoles = await UserManager.GetRolesAsync(userById);
-                    }
-
-                    <ul class="list-unstyled">
-                        @foreach (var role in userRoles)
-                        {
-                            <li>
-                                @role
-                            </li>
-                            <hr />
-                        }
-                    </ul>
-                </th>
-                <th>
                     <form>
+                        @{
+                            var userById = await UserManager.FindByIdAsync(user.Id);
+                            var userRoles = await UserManager.GetRolesAsync(userById);
+                        }
                         <div class="row">
                             <div class="col-md-12 checkbox-inline">
                                 <input type="hidden" name="UserId" value="@user.Id" />
-                                @*<select name="Role" asp-items="Model.Roles" class="form-control"></select>*@
                                 @foreach (var role in Model.Roles)
                                 {
-                                    <label><input type="checkbox" name="Roles" value="@role.Value" />@role.Text</label><br/>
+                                    if (userRoles.Contains(role.Text))
+                                    {
+                                        <label><input type="checkbox" name="Roles" value="@role.Value" checked/>@role.Text</label><br/>
+                                    }
+                                    else
+                                    {
+                                        <label><input type="checkbox" name="Roles" value="@role.Value"/>@role.Text</label><br/>
+                                    }
                                 }
                             </div>
                         </div>
                         <hr />
                         <div class="row">
                             <div class="col-md-4">
-                                <button class="btn btn-sm btn-success" type="submit" asp-area="Admin" asp-controller="Users" asp-action="AddToRole" formmethod="post">
-                                    Add Roles
+                                <button class="btn btn-sm btn-success" type="submit" asp-area="Admin" asp-controller="Users" asp-action="ManageRole" formmethod="post">
+                                    Save Roles
                                 </button>
                             </div>
                             @if (User.IsInRole(WebConstants.AdministratorRole) && user.Username != User.Identity.Name)
                             {
-                                //Remove Role
-                                <div class="col-md-4">
-                                    @*<button class="btn btn-sm btn-success" type="submit" asp-area="Admin" asp-controller="Users" asp-action="RemoveRole" formmethod="post">
-                                        Remove Roles
-                                    </button>*@
-                                </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 col-md-offset-4">
                                     <button class="btn btn-sm btn-danger" type="submit" asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" formmethod="post">
                                         Delete User
                                     </button>
