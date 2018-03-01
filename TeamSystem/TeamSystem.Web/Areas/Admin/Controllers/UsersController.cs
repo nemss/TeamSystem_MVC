@@ -50,22 +50,18 @@
         }
 
         //GET: /admin/users/ManageRole
-        public async Task<IActionResult> ManageRole(RolesFormModel model)
+        public async Task<IActionResult> ManageRole(string userId)
         {
-            var user = await this.userManager.FindByIdAsync(model.UserId);
+            var user = await this.userManager.FindByIdAsync(userId);
             var userRoles = await this.userManager.GetRolesAsync(user);
-
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction(nameof(Index));
-            }
+            var roles = await this.roleManager.Roles.Select(r => r.Name).ToListAsync();
 
             return View(new UserManageRoleForm
             {
-                UserId = model.UserId,
+                UserId = userId,
                 Username = user.UserName,
-                UserCurrentRoles = GetSelectListItems(userRoles),
-                UserNewRoles = GetSelectListItems(model.Roles)
+                UserCurrentRoles = userRoles.ToList(),
+                Roles = roles
             });
         }
 
@@ -73,13 +69,22 @@
         [HttpPost]
         public async Task<IActionResult> Manage(UserManageRoleForm model)
         {
-            var user = await this.userManager.FindByIdAsync(model.UserId);
-
-            if (model.UserNewRoles.Count() == 0)
+            if (!ModelState.IsValid)
             {
-                foreach (var role in model.UserCurrentRoles)
+                return RedirectToAction(nameof(Index));
+            }
+
+            var user = await this.userManager.FindByIdAsync(model.UserId);
+            if(model.UserCurrentRoles is null)
+            {
+                model.UserCurrentRoles = new List<string>();
+            }
+
+            if (model.UserNewRoles is null)
+            {
+                foreach (var role in model.UserCurrentRoles.ToList())
                 {
-                    await this.userManager.RemoveFromRoleAsync(user, role.Text);
+                    await this.userManager.RemoveFromRoleAsync(user, role);
                 }
                 TempData.AddSuccessMessage($"Successfuly removed selected roles from user {user.UserName} !");
             }
@@ -87,11 +92,11 @@
             {
                 foreach (var role in model.UserCurrentRoles)
                 {
-                    await this.userManager.RemoveFromRoleAsync(user, role.Text);
+                    await this.userManager.RemoveFromRoleAsync(user, role);
                 }
                 foreach (var role in model.UserNewRoles)
                 {
-                    await this.userManager.AddToRoleAsync(user, role.Text);
+                    await this.userManager.AddToRoleAsync(user, role);
                 }
                 TempData.AddSuccessMessage($"User {user.UserName} successfully added to the selected roles !");
             }

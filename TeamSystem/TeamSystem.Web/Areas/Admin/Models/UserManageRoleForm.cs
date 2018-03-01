@@ -10,8 +10,10 @@
 
         public string Username { get; set; }
 
-        public IEnumerable<SelectListItem> UserCurrentRoles { get; set; }
+        public IEnumerable<string> UserCurrentRoles { get; set; }
 
-        public IEnumerable<SelectListItem> UserNewRoles { get; set; }
+        public IEnumerable<string> UserNewRoles { get; set; }
+
+        public IEnumerable<string> Roles { get; set; }
     }
 }
