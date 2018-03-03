@@ -1,6 +1,6 @@
 @using Microsoft.AspNetCore.Identity
 @using TeamSystem.Data.Models
-@model LoginViewModel
+
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
@@ -22,48 +22,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        @*<li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>*@
-        <li id="logIn"><a>Log in</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
     </ul>
-    <div id="logInBox">
-        <section>
-            <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Username"></label>
-                    <input asp-for="Username" class="form-control" />
-                    <span asp-validation-for="Username" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Password"></label>
-                    <input asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="RememberMe">
-                            <input asp-for="RememberMe" />
-                            @Html.DisplayNameFor(m => m.RememberMe)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default center-block">Log in</button>
-                </div>
-                <div class="form-group text-center">
-                    <p>
-                        <a asp-action="ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user!</a>
-                    </p>
-                </div>
-            </form>
-        </section>
-    </div>
-
-    @section Scripts {
-        @await Html.PartialAsync("_ValidationScriptsPartial")
-    }
 }

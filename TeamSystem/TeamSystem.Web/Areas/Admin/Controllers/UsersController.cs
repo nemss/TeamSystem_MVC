@@ -75,31 +75,26 @@
             }
 
             var user = await this.userManager.FindByIdAsync(model.UserId);
-            if(model.UserCurrentRoles is null)
+            var userRoles = await this.userManager.GetRolesAsync(user);
+            var roles = await this.roleManager.Roles.Select(r => r.Name).ToListAsync();
+
+            if(model.UserNewRoles is null)
             {
-                model.UserCurrentRoles = new List<string>();
+                model.UserNewRoles = new List<string>();
             }
 
-            if (model.UserNewRoles is null)
+            foreach (var role in roles)
             {
-                foreach (var role in model.UserCurrentRoles.ToList())
-                {
-                    await this.userManager.RemoveFromRoleAsync(user, role);
-                }
-                TempData.AddSuccessMessage($"Successfuly removed selected roles from user {user.UserName} !");
-            }
-            else
-            {
-                foreach (var role in model.UserCurrentRoles)
-                {
-                    await this.userManager.RemoveFromRoleAsync(user, role);
-                }
-                foreach (var role in model.UserNewRoles)
+                if (model.UserNewRoles.Contains(role) && !userRoles.Contains(role))
                 {
                     await this.userManager.AddToRoleAsync(user, role);
                 }
-                TempData.AddSuccessMessage($"User {user.UserName} successfully added to the selected roles !");
+                else if (!model.UserNewRoles.Contains(role) && userRoles.Contains(role))
+                {
+                    await this.userManager.RemoveFromRoleAsync(user, role);
+                }
             }
+            TempData.AddSuccessMessage($"Successfuly made changes to roles on user - {user.UserName}");
 
             return RedirectToAction(nameof(Index));
         }
@@ -138,22 +133,6 @@
             TempData.AddSuccessMessage($"User {findUserById.UserName} successfully deleted !");
 
             return RedirectToAction(nameof(Index));
-        }
-
-        private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<string> elements)
-        {
-            var selectList = new List<SelectListItem>();
-
-            foreach (var element in elements)
-            {
-                selectList.Add(new SelectListItem
-                {
-                    Value = element,
-                    Text = element
-                });
-            }
-
-            return selectList;
         }
     }
 }
