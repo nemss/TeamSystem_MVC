@@ -104,3 +104,8 @@ img {
 .pagination li a{
     margin-right: 10px;
 }
+
+#logInBox {
+    display: none !important;
+    position:absolute !important;
+}
