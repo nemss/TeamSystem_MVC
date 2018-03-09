@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using TeamSystem.Data;
-    using TeamSystem.Data.Models;
+    using TeamSystem.Entities;
     using TeamSystem.Services.Matches.Interfaces;
     using TeamSystem.Services.Matches.Models;
 

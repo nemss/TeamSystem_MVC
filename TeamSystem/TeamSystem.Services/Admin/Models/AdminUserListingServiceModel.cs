@@ -1,7 +1,7 @@
 ﻿namespace TeamSystem.Services.Admin.Models
 {
     using TeamSystem.Common.Mapping;
-    using TeamSystem.Data.Models;
+    using TeamSystem.Entities;
 
     public class AdminUserListingServiceModel : IMapFrom<User>
     {

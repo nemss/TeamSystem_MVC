@@ -2,7 +2,6 @@
 {
     using AutoMapper;
     using Data;
-    using Data.Models;
     using Infrastructure.Extensions;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -11,6 +10,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using TeamSystem.Entities;
 
     public class Startup
     {

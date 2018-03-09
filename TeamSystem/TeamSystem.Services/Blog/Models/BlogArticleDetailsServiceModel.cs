@@ -4,7 +4,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using TeamSystem.Common.Mapping;
-    using TeamSystem.Data.Models;
+    using TeamSystem.Entities;
 
     public class BlogArticleDetailsServiceModel : IMapFrom<Articles>, IHaveCustomMapping
     {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace TeamSystem.Data.Models
+﻿namespace TeamSystem.Entities
 {
     public partial class StartingPlayers
     {

@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamSystem.Data", "TeamSyst
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamSystem.Services", "TeamSystem.Services\TeamSystem.Services.csproj", "{3EAA9ED3-17B7-460A-BC95-69DF7E0C0706}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamSystem.Common", "TeamSystem.Common\TeamSystem.Common.csproj", "{7D2E0B07-C9C7-4605-9414-0B7E41FF5195}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamSystem.Common", "TeamSystem.Common\TeamSystem.Common.csproj", "{7D2E0B07-C9C7-4605-9414-0B7E41FF5195}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamSystem.Entities", "TeamSystem.Entities\TeamSystem.Entities.csproj", "{01382185-4D03-45D9-9EB2-5C4DE9A48B63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7D2E0B07-C9C7-4605-9414-0B7E41FF5195}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D2E0B07-C9C7-4605-9414-0B7E41FF5195}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D2E0B07-C9C7-4605-9414-0B7E41FF5195}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01382185-4D03-45D9-9EB2-5C4DE9A48B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01382185-4D03-45D9-9EB2-5C4DE9A48B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01382185-4D03-45D9-9EB2-5C4DE9A48B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01382185-4D03-45D9-9EB2-5C4DE9A48B63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

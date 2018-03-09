@@ -6,7 +6,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using System.Threading.Tasks;
     using TeamSystem.Data;
-    using TeamSystem.Data.Models;
+    using TeamSystem.Entities;
     using static WebConstants;
 
     public static class ApplicationBuilderExtensions

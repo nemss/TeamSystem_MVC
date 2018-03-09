@@ -1,7 +1,6 @@
-﻿namespace TeamSystem.Data.Models
+﻿namespace TeamSystem.Entities
 {
     using Microsoft.AspNetCore.Identity;
-    using System.Collections;
     using System.Collections.Generic;
 
     public class User : IdentityUser

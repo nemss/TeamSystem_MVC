@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using TeamSystem.Data;
-    using TeamSystem.Data.Models;
+    using TeamSystem.Entities;
     using TeamSystem.Services.Blog.Interfaces;
     using TeamSystem.Services.Blog.Models;
 

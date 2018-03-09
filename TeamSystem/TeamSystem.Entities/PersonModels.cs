@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace TeamSystem.Data.Models
+﻿namespace TeamSystem.Entities
 {
+    using System;
+    using System.Collections.Generic;
+
     public partial class PersonModels
     {
         public PersonModels()

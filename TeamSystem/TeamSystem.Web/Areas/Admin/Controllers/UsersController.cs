@@ -7,7 +7,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using TeamSystem.Data.Models;
+    using TeamSystem.Entities;
     using TeamSystem.Services.Admin.Interfaces;
     using TeamSystem.Web.Areas.Admin.Models;
     using TeamSystem.Web.Infrastructure.Extensions;

@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TeamSystem.Common\TeamSystem.Common.csproj" />
     <ProjectReference Include="..\TeamSystem.Data\TeamSystem.Data.csproj" />
+    <ProjectReference Include="..\TeamSystem.Entities\TeamSystem.Entities.csproj" />
     <ProjectReference Include="..\TeamSystem.Services\TeamSystem.Services.csproj" />
   </ItemGroup>
 

@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
     using TeamSystem.Data.Models;
+    using TeamSystem.Entities;
     using TeamSystem.Services.Blog.Interfaces;
     using TeamSystem.Services.Html;
     using TeamSystem.Web.Areas.Blog.Models;

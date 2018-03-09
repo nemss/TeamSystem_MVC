@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    using TeamSystem.Data.Models;
+    using TeamSystem.Entities;
 
     public class TeamSystemDbContext : IdentityDbContext<User>
     {

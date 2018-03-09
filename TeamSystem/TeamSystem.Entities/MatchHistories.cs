@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace TeamSystem.Data.Models
+﻿namespace TeamSystem.Entities
 {
+    using System;
+
     public partial class MatchHistories
     {
         public int Id { get; set; }

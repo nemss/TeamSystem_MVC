@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
-    using TeamSystem.Data.Models;
+    using TeamSystem.Entities;
     using TeamSystem.Services.Article.Interfaces;
     using TeamSystem.Web.Models.Articles;
 
