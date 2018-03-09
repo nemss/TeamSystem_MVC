@@ -2,8 +2,8 @@
 {
     using TeamSystem.Services.Matches.Models;
 
-    public interface IRoleService 
-        : IBaseService<RoleDetailsServiceModel>
+    public interface ITeamService 
+        : IBaseService<TeamDetailsServiceModel>
     {
     }
 }

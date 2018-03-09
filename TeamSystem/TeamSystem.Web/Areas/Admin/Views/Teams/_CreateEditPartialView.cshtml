@@ -1,0 +1,13 @@
+﻿@model TeamsFormModel
+
+<div class="col-md-8 col-md-offset-2">
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="TeamName"></label>
+            <input asp-for="TeamName" class="form-control" />
+            <span asp-validation-for="TeamName" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-success center-block">Save Role</button>
+    </form>
+</div>
+

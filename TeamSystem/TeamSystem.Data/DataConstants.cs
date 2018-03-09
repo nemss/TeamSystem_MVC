@@ -9,5 +9,8 @@
 
         public const int ModelRolesNameMinLength = 3;
         public const int ModelRolesNameMaxLength = 100;
+
+        public const int TeamNameMinLength = 3;
+        public const int TeamNameMaxLength = 50;
     }
 }
