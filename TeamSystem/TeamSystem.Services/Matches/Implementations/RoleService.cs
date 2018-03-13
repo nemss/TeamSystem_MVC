@@ -2,6 +2,7 @@
 {
     using AutoMapper.QueryableExtensions;
     using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using TeamSystem.Data;
@@ -62,5 +63,11 @@
                            .Where(a => a.Id == id)
                            .ProjectTo<RoleDetailsServiceModel>()
                            .FirstOrDefaultAsync();
+
+        public async Task<IEnumerable<RoleDetailsServiceModel>> AllAsync()
+            => await this.db
+                         .ModelRoles
+                         .ProjectTo<RoleDetailsServiceModel>()
+                         .ToListAsync();
     }
 }
