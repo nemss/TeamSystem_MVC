@@ -2,7 +2,6 @@
 {
     using System;
     using System.Threading.Tasks;
-    using TeamSystem.Services.Matches.Models;
 
     public interface IPlayerService
     {
@@ -26,6 +25,6 @@
 
         Task DeleteAsync(int id);
 
-        Task GetByIdAsync(int id);
+        Task ByIdAsync(int id);
     }
 }

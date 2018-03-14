@@ -1,7 +1,58 @@
-﻿
+﻿@model PlayerFormModel
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Player";
 }
 
-<h2>Create</h2>
-
+<div class="row text-center">
+    <h2>@ViewData["Title"]</h2>
+    <hr />
+    <div class="col-md-4 col-md-offset-4">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecondName"></label>
+                <input asp-for="SecondName" class="form-control" />
+                <span asp-validation-for="SecondName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ucn"></label>
+                <input asp-for="Ucn" class="form-control" />
+                <span asp-validation-for="Ucn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthDate"></label>
+                <input asp-for="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+            <div class="col-md-9">
+                <label asp-for="ModelRoles"></label>
+                @*<input type="hidden" name="UserId" value="@user.Id" />*@
+                <select name="Role" asp-items="Model.ModelRoles" class="form-control"></select>
+            </div>
+            <div class="col-md-9">
+                @*<input type="hidden" name="UserId" value="@user.Id" />*@
+                <label asp-for="Teams"></label>
+                <select name="Role" asp-items="Model.Teams" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsReserved"></label>
+                <input asp-for="IsReserved" class="form-control" />
+                <span asp-validation-for="IsReserved" class="text-danger"></span>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-danger">Create Player</button>
+            <button class="btn btn-primary" asp-area="Blog" asp-action="Index" asp-controller="Index">Cancel</button>
+        </form>
+        <br />
+    </div>
+</div>

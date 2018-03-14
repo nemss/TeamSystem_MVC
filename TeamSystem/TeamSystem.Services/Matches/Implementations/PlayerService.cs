@@ -1,14 +1,10 @@
 ﻿namespace TeamSystem.Services.Matches.Implementations
 {
-    using Microsoft.EntityFrameworkCore;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using TeamSystem.Data;
     using TeamSystem.Entities;
     using TeamSystem.Services.Matches.Interfaces;
-    using TeamSystem.Services.Matches.Models;
 
     public class PlayerService : IPlayerService
     {
@@ -47,7 +43,7 @@
             throw new NotImplementedException();
         }       
 
-        public Task GetByIdAsync(int id)
+        public Task ByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
