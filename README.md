@@ -1,5 +1,4 @@
 # TeamSystemPROJECT
-Database first model creation.Working in a team.
 
 <b>Creadentials for SQL database:</b>
 
