@@ -1,9 +1,11 @@
-# TeamSystemPROJECT
+# TeamSystem MVC_project
 
 <b>Creadentials for SQL database:</b>
 
-Server=4c10ae04-255d-41a1-85cd-a8af00b8df53.sqlserver.sequelizer.com;
+Server=99b5d34d-cdeb-49d6-bc88-a87800908c1d.sqlserver.sequelizer.com;
 
-User ID=ojknzhtlrmamhqjd;
+Database=db99b5d34dcdeb49d6bc88a87800908c1d;
 
-Password=2Ldj5Ap6aQPBXYz5jRDHcfWfmFXhaUncLPju6wuhgAFmKrLZefuHhVfVX77xKg6n;
+User ID=yzcepdrnmjvwwkzc;
+
+Password=pfb8Rsvz5beJVuVwg4hccnhKR2b8Gc282oiHCXWPGNpJegSjHBV8q2cb7yqYqvZ3;
